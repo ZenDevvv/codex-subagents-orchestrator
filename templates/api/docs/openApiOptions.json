@@ -1,0 +1,67 @@
+{
+	"failOnErrors": true,
+	"definition": {
+		"openapi": "3.1.0",
+		"info": {
+			"title": "Template Backend API",
+			"version": "1.0.0",
+			"description": "Welcome to the template API documentation. This is a RESTful API for template backend services.",
+			"contact": {
+				"name": "Template Support",
+				"email": "support@example.com",
+				"url": "https://example.com/support"
+			},
+			"license": {
+				"name": "MIT",
+				"url": "https://opensource.org/licenses/MIT"
+			},
+			"termsOfService": "https://example.com/terms"
+		},
+		"servers": [
+			{
+				"url": "/api",
+				"description": "Development server"
+			},
+			{
+				"url": "https://api.example.com/api",
+				"description": "Production server"
+			}
+		],
+		"tags": [
+			{
+				"name": "Template",
+				"description": "Template management operations",
+				"externalDocs": {
+					"description": "Find out more about templates",
+					"url": "https://example.com/docs/templates"
+				}
+			},
+			{
+				"name": "Documentation",
+				"description": "API documentation endpoints"
+			}
+		],
+		"security": [
+			{
+				"bearerAuth": []
+			}
+		],
+		"components": {
+			"securitySchemes": {
+				"bearerAuth": {
+					"type": "http",
+					"scheme": "bearer",
+					"bearerFormat": "JWT",
+					"description": "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
+				},
+				"apiKey": {
+					"type": "apiKey",
+					"in": "header",
+					"name": "X-API-Key",
+					"description": "API Key for authentication"
+				}
+			}
+		}
+	},
+	"apis": ["./docs/models/*.yaml", "./app/**/*.router.ts", "./dist/**/*.router.js"]
+}
