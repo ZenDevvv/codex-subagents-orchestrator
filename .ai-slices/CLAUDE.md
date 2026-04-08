@@ -20,7 +20,7 @@ Then plan and execute slices:
 /build <SLICE_ID>
 /build all
 /change <what changed and why>
-/fix-bugs <all|next|SLICE_ID>
+/fix-bugs <all|next|SLICE_ID|BUG_DESCRIPTION>
 /doctor
 /ship
 ```
@@ -36,7 +36,7 @@ Use one workflow per project session.
 | `/build <next\|SLICE_ID\|all>` | Build one slice, the next ready slice, or every slice in order |
 | `/resume` | Summarize slice state and give the exact next command |
 | `/change <description>` | Update slice docs and mark impacted slices stale |
-| `/fix-bugs <all\|next\|SLICE_ID>` | Stabilize the generated scaffold for the chosen scope |
+| `/fix-bugs <all\|next\|SLICE_ID\|BUG_DESCRIPTION>` | Stabilize the generated scaffold for the chosen scope |
 | `/ship [all\|docs\|deploy]` | Run final review, documentation, deployment config, and release checks |
 | `/doctor` | Audit drift across commands, docs, tests, package scripts, and template contracts |
 

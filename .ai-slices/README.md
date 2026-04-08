@@ -25,7 +25,7 @@ This repo also ships one permanent reference slice: register, sign in, reach a p
 | `/build <next|SLICE_ID|all>` | Builds the next ready slice, one named slice, or all slices in dependency order |
 | `/resume` | Reports ready, blocked, stale, and complete slices with the next command |
 | `/change <description>` | Updates slice docs and marks impacted slices stale |
-| `/fix-bugs <all|next|SLICE_ID>` | Runs the stabilization loop for the chosen scope |
+| `/fix-bugs <all|next|SLICE_ID|BUG_DESCRIPTION>` | Runs the stabilization loop for the chosen scope |
 | `/ship [all|docs|deploy]` | Produces final docs, deployment config, and release checks |
 | `/doctor` | Runs deterministic repo drift checks for commands, docs, tests, package scripts, and template contracts |
 

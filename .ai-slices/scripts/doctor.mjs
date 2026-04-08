@@ -14,7 +14,7 @@ const expectedPublicCommands = [
 	"/build <next|SLICE_ID|all>",
 	"/resume",
 	"/change <description>",
-	"/fix-bugs <all|next|SLICE_ID>",
+	"/fix-bugs <all|next|SLICE_ID|BUG_DESCRIPTION>",
 	"/ship [all|docs|deploy]",
 	"/doctor",
 ];

@@ -18,6 +18,9 @@ Versioning: [Semantic Versioning](https://semver.org/)
 - `/doctor` command plus deterministic audit script for repo drift checks.
 - Backend auth contract tests and mocked/live Playwright reference coverage.
 
+### Changed
+- `/fix-bugs` command interface now accepts bug descriptions in addition to `all`, `next`, and `SLICE_ID`.
+
 ### Notes
 - V2 is intentionally separate from the original `ai-dev-orchestrator` project.
 - The root project remains the classic phase-based orchestrator.

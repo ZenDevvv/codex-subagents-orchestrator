@@ -42,7 +42,7 @@ Public commands:
 | `/build <next|SLICE_ID|all>` | Build one slice, the next ready slice, or all slices in order |
 | `/resume` | Report ready, stale, blocked, and complete slices with the exact next command |
 | `/change <description>` | Update slice docs and mark impacted slices stale |
-| `/fix-bugs <all|next|SLICE_ID>` | Stabilize the chosen slice scope |
+| `/fix-bugs <all|next|SLICE_ID|BUG_DESCRIPTION>` | Stabilize the chosen scope using a scope token or bug description |
 | `/ship [all|docs|deploy]` | Run final review, documentation, deployment config, and release checks |
 | `/doctor` | Audit repo drift across commands, docs, tests, package scripts, and template contracts |
 
