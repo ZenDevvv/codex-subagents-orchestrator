@@ -54,6 +54,7 @@ Optional and internal:
 | `docs/concept.md` | Shared app concept, created by `/discover` |
 | `docs/foundation.md` | Shared architecture, contracts, auth, and cross-slice rules |
 | `docs/design-system.md` | Shared visual system and page-level design rules |
+| `docs/design-references/` | UI screenshot and image references consumed by `/plan` and `/build` when present |
 | `docs/slices.md` | Slice manifest and dependency order |
 | `docs/slices/<SLICE_ID>.md` | One brief per slice |
 | `docs/slice-progress.md` | Slice-aware execution log |
@@ -72,3 +73,5 @@ Generated code still lands in:
 - `/ship` replaces the old docs and deployment finish phases.
 - `/doctor` is the deterministic repo-health check.
 - `docs/slice-progress.md` is the source of truth for ready, stale, blocked, and complete work.
+- Any image in `docs/design-references/` is treated as a UI design reference during `/plan` and `/build`.
+- If image references conflict with textual planning artifacts, textual artifacts win.

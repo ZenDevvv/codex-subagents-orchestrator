@@ -18,6 +18,7 @@ Read these skills before proceeding:
 ## Required Input
 
 Read `docs/concept.md` in full.
+Read all image files under `docs/design-references/` recursively when present.
 
 If `docs/concept.md` does not exist, stop and output:
 
@@ -63,6 +64,9 @@ This file must include:
 
 Write `docs/design-system.md` as a lightweight shared design system.
 
+Treat every image in `docs/design-references/` as a UI design reference input.
+If no images exist in that folder, continue normally without blocking `/plan`.
+
 It must include exact values or rules for:
 
 - color palette
@@ -72,6 +76,11 @@ It must include exact values or rules for:
 - layout patterns
 - responsive behavior
 - loading, empty, error, and success-state patterns
+
+Also include a short `Design Reference Usage` section that lists:
+
+- whether design-reference images were found
+- the key visual signals adopted from them
 
 Do not turn this into a full wireframe catalog. Page-specific detail belongs in slice briefs.
 
@@ -107,6 +116,8 @@ Each brief must include:
 - test plan
 - done criteria
 
+When design-reference images exist, mirror relevant visual direction in each slice `design notes` section.
+
 ---
 
 ## Slice Progress Initialization
@@ -135,6 +146,7 @@ Before considering `/plan` complete, verify:
 - no slice bundles unrelated user journeys
 - there are no circular dependencies
 - `docs/foundation.md` and `docs/design-system.md` contain only shared rules
+- `docs/design-system.md` includes `Design Reference Usage` and reflects `docs/design-references/` when images exist
 - every manifest row has a matching slice brief
 
 ---

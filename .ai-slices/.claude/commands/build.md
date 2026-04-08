@@ -27,6 +27,11 @@ Read these files before proceeding:
 - `docs/slices.md`
 - `docs/slice-progress.md`
 
+Also read all image files under `docs/design-references/` recursively when present.
+Treat these images as UI design references for frontend implementation.
+If there is a conflict between image references and textual planning artifacts, textual artifacts win:
+`docs/foundation.md`, `docs/design-system.md`, and `docs/slices/<SLICE_ID>.md`.
+
 If any of `docs/foundation.md`, `docs/design-system.md`, or `docs/slices.md` is missing, stop and output:
 
 ```text
@@ -140,6 +145,12 @@ Implement only the frontend scope described in the slice brief:
 - pages and components
 - loading, empty, error, and populated states
 - route registration
+
+When `docs/design-references/` contains images:
+
+- align visual direction with those references
+- keep implementation consistent with `docs/design-system.md`
+- if references conflict with textual rules, follow textual rules and record the conflict in completion output
 
 Checks:
 

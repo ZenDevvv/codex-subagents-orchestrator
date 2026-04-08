@@ -106,7 +106,15 @@ Contains the project artifacts maintained by the workflow:
 - `slices.md`
 - `slice-progress.md`
 - `changes.md`
+- `design-references/` (UI screenshot and image references used by `/plan` and `/build`)
 - `slices/SLICE_TEMPLATE.md`
+
+`docs/design-references/` behavior:
+
+- Any image added here is treated as a UI design reference input.
+- `/plan` uses these images when writing `docs/design-system.md` and slice design notes.
+- `/build` uses these images during frontend implementation.
+- If image references conflict with textual planning artifacts, textual artifacts win.
 
 ### `templates/`
 

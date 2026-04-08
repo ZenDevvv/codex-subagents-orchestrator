@@ -79,11 +79,19 @@ Slices are tracked in `docs/slices.md` and expanded in `docs/slices/<SLICE_ID>.m
 | `docs/concept.md` | Shared concept and constraints |
 | `docs/foundation.md` | Shared data, route, auth, and operational contracts |
 | `docs/design-system.md` | Shared visual system plus reusable page rules |
+| `docs/design-references/` | UI screenshot and image references consumed by `/plan` and `/build` when present |
 | `docs/slices.md` | Slice manifest with dependencies and status |
 | `docs/slices/<SLICE_ID>.md` | One build brief per slice |
 | `docs/slice-progress.md` | Execution log by scope and stage |
 | `docs/changes.md` | Change log and stale propagation audit trail |
 | `.ai-slices/docs/reference/` | Permanent reference implementation notes |
+
+Design-reference behavior:
+
+- Any image file under `docs/design-references/` is treated as a UI design reference.
+- `/plan` uses these references when generating `docs/design-system.md` and slice design notes.
+- `/build` uses these references for frontend visual direction.
+- If references conflict with textual planning artifacts, textual artifacts win.
 
 Code generation targets stay the same:
 

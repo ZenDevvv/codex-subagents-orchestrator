@@ -129,7 +129,11 @@ This file is for shared contracts only. Per-slice specifics belong in slice brie
 ## Responsive Rules
 ## State Patterns
 ## Accessibility Rules
+## Design Reference Usage
 ```
+
+All image files in `docs/design-references/` are UI design references when present.
+`Design Reference Usage` should state whether references were found and which visual signals were adopted.
 
 This file should not become a full app-wide wireframe catalog. Slice-specific page detail belongs in slice briefs.
 

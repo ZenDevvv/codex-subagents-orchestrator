@@ -20,6 +20,8 @@ Versioning: [Semantic Versioning](https://semver.org/)
 
 ### Changed
 - `/fix-bugs` command interface now accepts bug descriptions in addition to `all`, `next`, and `SLICE_ID`.
+- `/plan` and `/build` now explicitly consume images in `docs/design-references/` as UI references when present.
+- Added precedence rule: textual planning artifacts win when image references conflict with `foundation`, `design-system`, or slice brief requirements.
 
 ### Notes
 - V2 is intentionally separate from the original `ai-dev-orchestrator` project.
