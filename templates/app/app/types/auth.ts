@@ -26,3 +26,7 @@ export type LoginResponse = {
 	user: UserWithRelation;
 	token: string;
 };
+
+export type CurrentUserResponse = {
+	user: UserWithRelation;
+};

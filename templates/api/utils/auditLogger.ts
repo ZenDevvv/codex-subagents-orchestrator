@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 
 const prisma = new PrismaClient();
 
@@ -56,7 +56,12 @@ export async function logAudit(
 			.create({
 				data: auditData,
 			})
-			.catch((err) => console.error("Audit log DB insert failed:", err.message));
+			.catch((err: unknown) =>
+				console.error(
+					"Audit log DB insert failed:",
+					err instanceof Error ? err.message : String(err),
+				),
+			);
 	} catch (error: any) {
 		console.error("Failed to log audit event:", error.message);
 	}

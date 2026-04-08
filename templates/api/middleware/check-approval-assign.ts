@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 
 import { AuthRequest } from "./verifyToken";
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 
 const prisma = new PrismaClient();
 

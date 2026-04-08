@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 import { getUsersByRole } from "../helper/roleHelper";
 
 const prisma = new PrismaClient();
@@ -38,10 +38,10 @@ export async function logNotification(
 				return; // Skip notification if no recipients
 			}
 
-			const recipientIds = users.map((user) => user.id);
+			const recipientIds = users.map((user: { id: string }) => user.id);
 			recipients = {
 				read: [],
-				unread: recipientIds.map((id) => ({ user: id, date: new Date() })),
+				unread: recipientIds.map((id: string) => ({ user: id, date: new Date() })),
 			};
 		}
 
@@ -60,7 +60,12 @@ export async function logNotification(
 			.create({
 				data: notificationData,
 			})
-			.catch((err) => console.error("Notification DB insert failed:", err.message));
+			.catch((err: unknown) =>
+				console.error(
+					"Notification DB insert failed:",
+					err instanceof Error ? err.message : String(err),
+				),
+			);
 	} catch (error: any) {
 		console.error("Failed to log notification:", error.message);
 	}

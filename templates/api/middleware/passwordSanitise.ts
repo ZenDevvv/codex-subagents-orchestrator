@@ -1,4 +1,4 @@
-import { Prisma } from "../generated/prisma";
+import { Prisma } from "../generated/prisma/index";
 
 /**
  * Recursively removes all "password" fields from any object or array.
@@ -36,7 +36,10 @@ function removePasswordDeep(obj: any): any {
  * Only sanitizes findMany queries to avoid interfering with auth.
  */
 export function hidePasswordMiddleware(): Prisma.Middleware {
-	return async (params, next) => {
+	return async (
+		params: Prisma.MiddlewareParams,
+		next: (params: Prisma.MiddlewareParams) => Promise<unknown>,
+	) => {
 		const result = await next(params);
 
 		// Only sanitize findMany queries to avoid interfering with auth

@@ -50,8 +50,8 @@ For each selected slice, run checks in this order and stop on the first failure:
 2. `templates/api`: `npm test`
 3. `templates/app`: `npm run typecheck`
 4. `templates/app`: `npm run build`
-5. `templates/app`: `npm run test:e2e -- --grep @slice-mocked`
-6. `templates/app`: `npm run test:e2e -- --grep @slice-live`
+5. `templates/app`: `npm run test:e2e:mocked`
+6. `templates/app`: `npm run test:e2e:live`
 
 Apply the smallest targeted patch that fixes the failure, then rerun the failed check before continuing.
 

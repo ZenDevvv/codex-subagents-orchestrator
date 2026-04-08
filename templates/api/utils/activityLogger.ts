@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 
 const prisma = new PrismaClient();
 
@@ -42,7 +42,12 @@ export async function logActivity(
 			.create({
 				data: activityData,
 			})
-			.catch((err) => console.error("Activity log DB insert failed:", err.message));
+			.catch((err: unknown) =>
+				console.error(
+					"Activity log DB insert failed:",
+					err instanceof Error ? err.message : String(err),
+				),
+			);
 	} catch (error: any) {
 		console.error("Failed to log activity:", error.message);
 	}

@@ -159,7 +159,7 @@ Checks:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e -- --grep @slice-mocked
+npm run test:e2e:mocked
 ```
 
 ### Stage E - `LIVE_TESTS`
@@ -174,7 +174,7 @@ Checks:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e -- --grep @slice-live
+npm run test:e2e:live
 ```
 
 ### Stage F - `REVIEW`

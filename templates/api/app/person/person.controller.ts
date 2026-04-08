@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient, Prisma } from "../../generated/prisma";
+import { PrismaClient, Prisma } from "../../generated/prisma/index";
 import { getLogger } from "../../helper/logger";
 import { config } from "../../config/constant";
 import { buildErrorResponse, formatZodErrors, handlePrismaError } from "../../helper/error-handler";

@@ -1,51 +1,36 @@
 # App Template
 
-Frontend starter for the team's fullstack projects. Built with React Router v7, TypeScript, Tailwind CSS, and shadcn/ui — structured so new pages and modules slot in consistently.
+Frontend starter for the slice workflow. Built with React Router v7, TypeScript, Tailwind CSS, and shadcn/ui.
 
 ## Stack
 
-- React Router v7 — file-based routing with SSR support
+- React Router v7
 - TypeScript
-- Tailwind CSS + shadcn/ui — component library and styling
-- Vite — dev server and build tool
-- TanStack Query (React Query) — server state and data fetching
-- Zod — schema validation (copied from backend per module)
-- Axios — HTTP client via a shared API client
+- Tailwind CSS + shadcn/ui
+- TanStack Query
+- Zod for copied contracts
+- Fetch-based shared API client
+- Playwright for end-to-end checks
 
-## Project Structure
+## Current Reference Slice
 
-```
-app/
-├── components/
-│   ├── ui/             # shadcn/ui primitives (Button, Input, Dialog, etc.)
-│   ├── molecule/       # Composed UI components (DataTable, ComboBox, etc.)
-│   ├── organisms/      # Feature-level components (AppSidebar, etc.)
-│   ├── forms/          # Form components per module
-│   └── skeletons/      # Loading skeleton components
+The starter now ships one canonical auth slice:
 
-├── routes/             # Page components (file-based routing)
-│   └── auth/           # Auth pages (login, etc.)
+- public landing page
+- register page
+- login page
+- protected dashboard
+- logout flow
 
-├── layouts/            # Route layout wrappers
-│   ├── main-layout.tsx
-│   ├── admin-layout.tsx
-│   └── auth-layout.tsx
+Core files:
 
-├── hooks/              # React Query hooks per module (use-auth.ts, use-supplier.ts, etc.)
-├── services/           # API call functions per module
-├── context/auth/       # Auth context and provider
-├── zod/                # Zod schemas (copied and kept in sync with backend)
-├── types/              # TypeScript types
-├── configs/
-│   ├── endpoints.ts    # API endpoint constants
-│   └── page-titles.ts  # Page title constants
-└── lib/
-    ├── api-client.ts   # Axios instance with auth headers
-    ├── query-client.ts # TanStack Query client config
-    └── utils.ts        # Shared utilities
-```
-
-Each module follows the same layering: `zod/` → `types/` → `services/` → `hooks/` → `routes/` (page).
+- `app/routes/landing.tsx`
+- `app/routes/auth/register.tsx`
+- `app/routes/auth/login.tsx`
+- `app/routes/dashboard.tsx`
+- `app/context/auth/auth-provider.tsx`
+- `tests/e2e/auth-mocked.spec.ts`
+- `tests/e2e/auth-live.spec.ts`
 
 ## Quick Start
 
@@ -54,40 +39,36 @@ npm install
 npm run dev
 ```
 
-Set the API base URL in `app/lib/api-client.ts` or via environment variable.
-
-## Playwright E2E
-
-```bash
-npx playwright install chromium
-npm run test:e2e
-```
-
-Playwright runs against a local dev server using `npm run dev:e2e`.
-
-Suggested scoped runs:
-
-```bash
-# Frontend-only mocked coverage (Phase 10)
-npm run test:e2e -- --grep @phase10-mocked
-
-# Live-backend integration coverage (Phase 11)
-npm run test:e2e -- --grep @phase11-live
-```
+Set the API base URL with `VITE_BASE_URL` when needed. By default the app targets `http://localhost:3000/api`.
 
 ## Scripts
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start Vite dev server |
+| `npm run dev` | Start the React Router dev server |
+| `npm run dev:e2e` | Start the frontend on the fixed Playwright port |
 | `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run typecheck` | Run TypeScript type checking |
+| `npm run start` | Start the production server |
+| `npm run typecheck` | Run route type generation and TypeScript checks |
 | `npm run lint` | Run ESLint |
-| `npm run format` | Format with ESLint |
-| `npm run frontend:check` | Typecheck + production build sanity check |
+| `npm run frontend:check` | Run typecheck and production build |
 | `npm run test:e2e` | Run Playwright E2E tests |
 
-## License
+## Playwright Conventions
 
-MIT
+Use slice tags, not legacy phase tags:
+
+```bash
+# Mocked slice coverage
+npm run test:e2e:mocked
+
+# Live integration coverage
+E2E_ENABLE_LIVE=1 npm run test:e2e:live
+```
+
+The live test expects:
+
+- `E2E_ENABLE_LIVE=1`
+- an available backend at `http://127.0.0.1:3000` by default, or `E2E_API_BASE_URL`
+
+Without that flag, the live test skips cleanly by design.

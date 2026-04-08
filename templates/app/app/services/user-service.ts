@@ -1,7 +1,7 @@
 import { APIService } from "./api-service";
 import { apiClient, type ApiResponse } from "~/lib/api-client";
 import { API_ENDPOINTS } from "~/configs/endpoints";
-import type { loginResponse } from "~/types/auth";
+import type { CurrentUserResponse } from "~/types/auth";
 import type { GetAllUsers } from "~/zod/user.zod";
 
 const { USER } = API_ENDPOINTS;
@@ -37,7 +37,7 @@ class UserService extends APIService {
 
 	getCurrentUser = async () => {
 		try {
-			const response: ApiResponse<loginResponse> = await apiClient.get(USER.GET_CURRENT);
+			const response: ApiResponse<CurrentUserResponse> = await apiClient.get(USER.GET_CURRENT);
 			return response.data;
 		} catch (error: any) {
 			console.error("Error fetching current user:", error);

@@ -28,7 +28,7 @@ Run:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e -- --grep @slice-mocked
+npm run test:e2e:mocked
 ```
 
 ## Live Verification
@@ -41,6 +41,7 @@ Rules:
 - do not stub core app API traffic
 - cover authenticated mutations when the slice introduces them
 - verify the outcome is visible in the next read step
+- gate live runs behind explicit environment setup when the backend is optional in local development
 
 Run:
 
@@ -48,7 +49,7 @@ Run:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e -- --grep @slice-live
+npm run test:e2e:live
 ```
 
 ## Review Focus

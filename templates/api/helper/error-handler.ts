@@ -1,5 +1,4 @@
-import { Response } from "express";
-import { Prisma } from "../generated/prisma";
+import { Prisma } from "../generated/prisma/index";
 
 export interface ErrorDetail {
 	field?: string;
@@ -26,12 +25,6 @@ export function buildErrorResponse(
 		errors,
 		timestamp: new Date().toISOString(),
 	};
-}
-
-// Optional: Helper to convert Zod errors to ErrorDetail format
-export interface ErrorDetail {
-	field?: string;
-	message: string;
 }
 
 export function formatZodErrors(zodError: any): ErrorDetail[] {

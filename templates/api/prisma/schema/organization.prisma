@@ -1,0 +1,17 @@
+model Organization {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name        String
+  description String?
+  code        String  @unique
+  logo        String?
+  background  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users   User[]
+  persons Person[]
+
+  @@map("organizations")
+}

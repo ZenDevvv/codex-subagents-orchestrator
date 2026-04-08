@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 import { getLogger } from "../helper/logger";
 import { redisClient } from "./redis";
 

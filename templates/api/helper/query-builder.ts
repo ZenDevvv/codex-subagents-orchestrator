@@ -1,5 +1,5 @@
 import { DMMF } from "@prisma/client/runtime/library";
-import { Prisma } from "../generated/prisma";
+import { Prisma } from "../generated/prisma/index";
 
 const dmmf: DMMF.Document = Prisma.dmmf as unknown as DMMF.Document;
 

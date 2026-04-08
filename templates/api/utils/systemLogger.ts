@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 
 const prisma = new PrismaClient();
 
@@ -64,7 +64,12 @@ export async function logSystemEvent(
 			.create({
 				data: systemLogData,
 			})
-			.catch((err) => console.error("System log DB insert failed:", err.message));
+			.catch((err: unknown) =>
+				console.error(
+					"System log DB insert failed:",
+					err instanceof Error ? err.message : String(err),
+				),
+			);
 	} catch (error: any) {
 		console.error("Failed to log system event:", error.message);
 	}

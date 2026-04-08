@@ -1,13 +1,13 @@
 {
 	"name": "msa-template",
 	"version": "1.0.122",
-	"main": "dist/lib-entry.js",
+	"main": "dist/server.js",
 	"scripts": {
 		"dev": "dotenv nodemon index.ts",
 		"start": "dotenv nodemon index.ts",
 		"user-seed": "ts-node prisma/seed.ts",
-		"lint": "eslint app/**/*.ts index.ts lib-entry.ts",
-		"format": "eslint app/**/*.ts index.ts lib-entry.ts --fix",
+		"lint": "eslint app/**/*.ts index.ts",
+		"format": "eslint app/**/*.ts index.ts --fix",
 		"test": "mocha --require ts-node/register tests/**/*.spec.ts",
 		"build": "webpack --config webpack.config.js",
 		"prod": "node ./dist/server.js",
@@ -18,11 +18,9 @@
 		"prisma-format": "npx prisma format",
 		"prisma-seed": "npx prisma db seed",
 		"prisma-reset": "npx prisma migrate reset --force",
-		"apply-indexes": "ts-node scripts/apply-indexes.ts",
 		"copy-codebase": "ts-node scripts/copy-codebase.ts",
 		"generate": "ts-node scripts/generate-and-export.ts",
-		"api-list": "curl -X GET 'http://localhost:3000/api/docs/api-list?format=json' | jq",
-		"zod-generate": "node scripts/zod-generate.js"
+		"api-list": "curl -X GET 'http://localhost:3000/api/docs/api-list?format=json' | jq"
 	},
 	"prisma": {
 		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

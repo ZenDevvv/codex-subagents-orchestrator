@@ -12,6 +12,8 @@
 		"typecheck": "react-router typegen && tsc",
 		"frontend:check": "npm run typecheck && npm run build",
 		"test:e2e": "playwright test",
+		"test:e2e:mocked": "playwright test --grep @slice-mocked",
+		"test:e2e:live": "playwright test --grep @slice-live",
 		"test:e2e:ui": "playwright test --ui",
 		"test:e2e:headed": "playwright test --headed",
 		"test:e2e:report": "playwright show-report"

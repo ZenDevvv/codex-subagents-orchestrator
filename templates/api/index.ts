@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import { PrismaClient } from "./generated/prisma";
+import { PrismaClient } from "./generated/prisma/index";
 import { config } from "./config/config";
 import openApiSpecs from "./docs/openApiSpecs";
 import verifyToken from "./middleware/verifyToken";

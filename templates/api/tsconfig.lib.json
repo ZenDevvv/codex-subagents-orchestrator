@@ -19,14 +19,23 @@
 		"sourceMap": false,
 		"declarationMap": true
 	},
-	"include": ["lib-entry.ts"],
+	"include": [
+		"index.ts",
+		"app/**/*.ts",
+		"config/**/*.ts",
+		"helper/**/*.ts",
+		"lib/**/*.ts",
+		"middleware/**/*.ts",
+		"utils/**/*.ts",
+		"zod/**/*.ts"
+	],
 	"exclude": [
 		"node_modules",
 		"dist",
 		"tests",
 		"**/*.spec.ts",
 		"**/*.test.ts",
-		"index.ts",
-		"app/**/*"
+		"docs/**/*",
+		"scripts/**/*"
 	]
 }

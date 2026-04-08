@@ -14,6 +14,9 @@ Versioning: [Semantic Versioning](https://semver.org/)
 - `.ai-slices/` orchestrator with slice-aware commands, agents, skills, and reference docs.
 - Root `docs/` placeholders for slice workflow artifacts and design references.
 - Clean starter `templates/` copy without local/generated artifacts.
+- Permanent auth-and-dashboard reference slice in the starter templates.
+- `/doctor` command plus deterministic audit script for repo drift checks.
+- Backend auth contract tests and mocked/live Playwright reference coverage.
 
 ### Notes
 - V2 is intentionally separate from the original `ai-dev-orchestrator` project.

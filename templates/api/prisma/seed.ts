@@ -1,6 +1,6 @@
 import seedSuperAdmin from "./seeds/superadmin.seed";
 import seedOrganizations from "./seeds/organization.seed";
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 const prisma = new PrismaClient();
 
 async function main() {

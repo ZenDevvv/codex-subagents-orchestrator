@@ -1,30 +1,33 @@
 # AI Dev Orchestrator V2
 
-Vertical-slicing version of AI Dev Orchestrator, packaged as a standalone project that can be moved into its own repository.
+Standalone vertical-slicing orchestrator packaged with generated-workflow docs and starter frontend/backend templates.
 
-This project keeps the orchestrator under `.ai-slices/`, generated workflow artifacts under `docs/`, and starter application templates under `templates/`.
+This repository keeps:
 
----
+- orchestrator prompts and guidance under `.ai-slices/`
+- generated workflow artifacts under `docs/`
+- starter applications under `templates/`
 
 ## What This Is
 
-V2 replaces the long numbered phase chain with feature-journey slices.
+V2 replaces a long phase chain with user-visible feature slices.
 
-The workflow is:
+The intended workflow is:
 
 1. refine the app concept
-2. plan the shared foundation and slice manifest
+2. plan shared contracts and slice order
 3. build one dependency-safe slice at a time
-4. stabilize failures by slice
-5. ship docs and deployment config after launch slices are complete
+4. stabilize slice failures where they appear
+5. ship docs and deployment output after launch slices are complete
 
-A slice is one user-visible outcome, such as:
+This package now includes a permanent reference slice:
 
-- visitor signs up, signs in, and reaches the dashboard
-- manager creates a project and sees it in the project list
-- finance user exports a report and downloads the file
+- register
+- sign in
+- reach a protected dashboard
+- sign out
 
----
+The reference slice exists to prove that the orchestrator, templates, and tests stay aligned.
 
 ## Command Surface
 
@@ -41,6 +44,7 @@ Public commands:
 | `/change <description>` | Update slice docs and mark impacted slices stale |
 | `/fix-bugs <all|next|SLICE_ID>` | Stabilize the chosen slice scope |
 | `/ship [all|docs|deploy]` | Run final review, documentation, deployment config, and release checks |
+| `/doctor` | Audit repo drift across commands, docs, tests, package scripts, and template contracts |
 
 Optional support commands:
 
@@ -48,8 +52,6 @@ Optional support commands:
 |---|---|
 | `/review [scope]` | Manual review of a slice or the ship checkpoint |
 | `/checkpoint` | Short progress snapshot for long sessions |
-
----
 
 ## Recommended Flow
 
@@ -62,26 +64,25 @@ Optional support commands:
 /build next
 /change <if requirements shift>
 /fix-bugs next
+/doctor
 /build all
 /ship
 ```
 
 Use one workflow per project session. Do not mix this slice workflow with the legacy phase-based orchestrator from the original project.
 
----
-
 ## Project Layout
 
 ```text
 ai-dev-orchestrator-v2/
-├── .ai-slices/               # standalone vertical-slicing orchestrator
-├── docs/                     # generated workflow artifacts
-├── templates/
-│   ├── api/                  # backend starter template
-│   └── app/                  # frontend starter template
-├── README.md
-├── CHANGELOG.md
-└── .gitignore
+|-- .ai-slices/               # standalone vertical-slicing orchestrator
+|-- docs/                     # generated workflow artifacts
+|-- templates/
+|   |-- api/                  # backend starter template
+|   `-- app/                  # frontend starter template
+|-- README.md
+|-- CHANGELOG.md
+`-- .gitignore
 ```
 
 ### `.ai-slices/`
@@ -92,7 +93,8 @@ Contains:
 - `.claude/commands/`
 - `agents/`
 - `skills/`
-- reference docs for the workflow
+- `scripts/doctor.mjs`
+- permanent reference docs for the workflow
 
 ### `docs/`
 
@@ -105,16 +107,22 @@ Contains the project artifacts maintained by the workflow:
 - `slice-progress.md`
 - `changes.md`
 - `slices/SLICE_TEMPLATE.md`
-- `design-references/`
 
 ### `templates/`
 
-Generated code still lands directly in:
+Generated code lands directly in:
 
 - `templates/api/`
 - `templates/app/`
 
----
+The current starter proves one canonical slice in code and tests:
+
+- `templates/app/app/routes/auth/register.tsx`
+- `templates/app/app/routes/auth/login.tsx`
+- `templates/app/app/routes/dashboard.tsx`
+- `templates/api/app/auth/`
+- `templates/app/tests/e2e/auth-mocked.spec.ts`
+- `templates/app/tests/e2e/auth-live.spec.ts`
 
 ## Slice State Model
 
@@ -128,17 +136,15 @@ Generated code still lands directly in:
 
 Recommended status values:
 
-- `✅ Complete`
-- `⚠️ Stale`
-- `🚧 In Progress`
-- `⛔ Blocked`
-- `⏭️ Skipped`
-
----
+- `Complete`
+- `Stale`
+- `In Progress`
+- `Blocked`
+- `Skipped`
 
 ## Packaging Notes
 
-- This folder is intentionally standalone and ready to be moved into its own repository.
-- There is no top-level `.claude/` folder in v2.
-- Template copies are cleaned of local/generated artifacts such as `node_modules`, Playwright reports, caches, and test-result output.
-- The original root project is left unchanged and remains the classic orchestrator.
+- This folder is intentionally standalone and ready to move into its own repository.
+- There is no top-level `.claude/` folder in V2.
+- Template copies are cleaned of local and generated artifacts such as `node_modules`, Playwright reports, caches, and test-result output.
+- `/doctor` is the deterministic repo-health command for ongoing maintenance.

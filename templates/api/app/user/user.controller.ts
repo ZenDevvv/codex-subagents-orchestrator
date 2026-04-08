@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient, Prisma } from "../../generated/prisma";
+import { PrismaClient, Prisma } from "../../generated/prisma/index";
 import * as argon2 from "argon2";
 import { getLogger } from "../../helper/logger";
 import { transformFormDataToObject } from "../../helper/transformObject";

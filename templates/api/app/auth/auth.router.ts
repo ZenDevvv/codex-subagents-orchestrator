@@ -18,101 +18,37 @@ export const router = (route: Router, controller: IController): Router => {
 	 *     RegisterRequest:
 	 *       type: object
 	 *       required:
-	 *         - email
-	 *         - password
-	 *         - userName
-	 *         - role
 	 *         - firstName
 	 *         - lastName
+	 *         - email
+	 *         - userName
+	 *         - password
 	 *       properties:
+	 *         firstName:
+	 *           type: string
+	 *         lastName:
+	 *           type: string
 	 *         email:
 	 *           type: string
 	 *           format: email
-	 *           description: User email address
-	 *         password:
-	 *           type: string
-	 *           minLength: 6
-	 *           description: Password (minimum 6 characters)
 	 *         userName:
 	 *           type: string
 	 *           minLength: 3
 	 *           maxLength: 50
-	 *           pattern: '^[a-zA-Z0-9_-]+$'
-	 *           description: Username (letters, numbers, underscores, hyphens only)
-	 *         role:
+	 *         password:
 	 *           type: string
-	 *           enum: [superadmin, viewer, admin, guest]
-	 *           description: User role
-	 *         subRole:
-	 *           type: array
-	 *           items:
-	 *             type: string
-	 *           description: User sub-roles (optional, defaults to empty array)
-	 *         firstName:
-	 *           type: string
-	 *           minLength: 1
-	 *           description: First name
-	 *         lastName:
-	 *           type: string
-	 *           minLength: 1
-	 *           description: Last name
-	 *         organizationId:
-	 *           type: string
-	 *           pattern: '^[0-9a-fA-F]{24}$'
-	 *           description: Organization ID (MongoDB ObjectId)
-	 *         phoneNumber:
-	 *           type: string
-	 *           description: Phone number
-	 *         dateOfBirth:
-	 *           type: string
-	 *           format: date-time
-	 *           description: Date of birth
-	 *         gender:
-	 *           type: string
-	 *           enum: [male, female, other]
-	 *           description: Gender
-	 *         nationality:
-	 *           type: string
-	 *           description: Nationality
-	 *         address:
-	 *           type: object
-	 *           properties:
-	 *             street:
-	 *               type: string
-	 *             city:
-	 *               type: string
-	 *             state:
-	 *               type: string
-	 *             country:
-	 *               type: string
-	 *             postalCode:
-	 *               type: string
-	 *         personalInfo:
-	 *           type: object
-	 *           additionalProperties: true
-	 *           description: Additional personal information
-	 *         contactInfo:
-	 *           type: object
-	 *           additionalProperties: true
-	 *           description: Contact information
-	 *         identification:
-	 *           type: object
-	 *           additionalProperties: true
-	 *           description: Identification documents
+	 *           minLength: 6
 	 *     LoginRequest:
 	 *       type: object
 	 *       required:
-	 *         - email
+	 *         - identifier
 	 *         - password
 	 *       properties:
-	 *         email:
+	 *         identifier:
 	 *           type: string
-	 *           format: email
-	 *           description: User email address
+	 *           description: Email or username
 	 *         password:
 	 *           type: string
-	 *           minLength: 1
-	 *           description: User password
 	 *     UpdatePasswordRequest:
 	 *       type: object
 	 *       required:
@@ -122,41 +58,31 @@ export const router = (route: Router, controller: IController): Router => {
 	 *         userId:
 	 *           type: string
 	 *           pattern: '^[0-9a-fA-F]{24}$'
-	 *           description: User ID (MongoDB ObjectId)
 	 *         password:
 	 *           type: string
 	 *           minLength: 6
-	 *           description: New password (minimum 6 characters)
 	 *     AuthUser:
 	 *       type: object
 	 *       properties:
 	 *         id:
 	 *           type: string
-	 *           description: User ID
 	 *         email:
 	 *           type: string
-	 *           description: User email
 	 *         userName:
 	 *           type: string
-	 *           description: Username
 	 *         role:
 	 *           type: string
-	 *           description: User role
 	 *         subRole:
 	 *           type: array
 	 *           items:
 	 *             type: string
-	 *           description: User sub-roles
 	 *         avatar:
 	 *           type: string
 	 *           nullable: true
-	 *           description: Avatar URL
 	 *         person:
 	 *           type: object
-	 *           description: Associated person data
 	 *         token:
 	 *           type: string
-	 *           description: JWT authentication token (only in login response)
 	 */
 
 	/**
@@ -164,7 +90,7 @@ export const router = (route: Router, controller: IController): Router => {
 	 * /api/auth/register:
 	 *   post:
 	 *     summary: Register a new user
-	 *     description: Register a new user with person details and authentication credentials
+	 *     description: Register a basic user account for the canonical auth slice
 	 *     tags: [Auth]
 	 *     requestBody:
 	 *       required: true
@@ -175,22 +101,6 @@ export const router = (route: Router, controller: IController): Router => {
 	 *     responses:
 	 *       201:
 	 *         description: User registered successfully
-	 *         content:
-	 *           application/json:
-	 *             schema:
-	 *               type: object
-	 *               properties:
-	 *                 success:
-	 *                   type: boolean
-	 *                   example: true
-	 *                 message:
-	 *                   type: string
-	 *                   example: "Registration successful"
-	 *                 data:
-	 *                   type: object
-	 *                   properties:
-	 *                     result:
-	 *                       $ref: '#/components/schemas/AuthUser'
 	 *       400:
 	 *         description: Validation error or user already exists
 	 *       500:
@@ -203,7 +113,7 @@ export const router = (route: Router, controller: IController): Router => {
 	 * /api/auth/login:
 	 *   post:
 	 *     summary: Login user
-	 *     description: Authenticate user and return JWT token
+	 *     description: Authenticate a user with email or username and return the session token
 	 *     tags: [Auth]
 	 *     requestBody:
 	 *       required: true
@@ -214,25 +124,6 @@ export const router = (route: Router, controller: IController): Router => {
 	 *     responses:
 	 *       200:
 	 *         description: Login successful
-	 *         content:
-	 *           application/json:
-	 *             schema:
-	 *               type: object
-	 *               properties:
-	 *                 success:
-	 *                   type: boolean
-	 *                   example: true
-	 *                 message:
-	 *                   type: string
-	 *                   example: "Logged in successfully"
-	 *                 data:
-	 *                   $ref: '#/components/schemas/AuthUser'
-	 *         headers:
-	 *           Set-Cookie:
-	 *             description: JWT token set as HTTP-only cookie
-	 *             schema:
-	 *               type: string
-	 *               example: "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Path=/"
 	 *       401:
 	 *         description: Invalid credentials
 	 *       500:
@@ -245,36 +136,13 @@ export const router = (route: Router, controller: IController): Router => {
 	 * /api/auth/logout:
 	 *   post:
 	 *     summary: Logout user
-	 *     description: Logout user and clear JWT token cookie
+	 *     description: Clear the authentication cookie
 	 *     tags: [Auth]
 	 *     security:
 	 *       - cookieAuth: []
 	 *     responses:
 	 *       200:
 	 *         description: Successfully logged out
-	 *         content:
-	 *           application/json:
-	 *             schema:
-	 *               type: object
-	 *               properties:
-	 *                 success:
-	 *                   type: boolean
-	 *                   example: true
-	 *                 message:
-	 *                   type: string
-	 *                   example: "Logged out successfully"
-	 *                 data:
-	 *                   type: object
-	 *                   properties:
-	 *                     success:
-	 *                       type: boolean
-	 *                       example: true
-	 *         headers:
-	 *           Set-Cookie:
-	 *             description: JWT token cookie cleared
-	 *             schema:
-	 *               type: string
-	 *               example: "token=; HttpOnly; Path=/; Max-Age=0"
 	 *       500:
 	 *         description: Internal server error
 	 */
@@ -298,23 +166,6 @@ export const router = (route: Router, controller: IController): Router => {
 	 *     responses:
 	 *       200:
 	 *         description: Password updated successfully
-	 *         content:
-	 *           application/json:
-	 *             schema:
-	 *               type: object
-	 *               properties:
-	 *                 success:
-	 *                   type: boolean
-	 *                   example: true
-	 *                 message:
-	 *                   type: string
-	 *                   example: "Password updated successfully"
-	 *                 data:
-	 *                   type: object
-	 *                   properties:
-	 *                     success:
-	 *                       type: boolean
-	 *                       example: true
 	 *       400:
 	 *         description: Validation error
 	 *       404:

@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
 	entry: "./index.ts",
+	mode: process.env.NODE_ENV === "development" ? "development" : "production",
 	target: "node",
 	externals: [
 		/^[a-z\-0-9]+$/, // Ignore node_modules folder

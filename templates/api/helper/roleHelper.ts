@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma/index";
 import { roles } from "../config/constant";
 const prisma = new PrismaClient();
 
