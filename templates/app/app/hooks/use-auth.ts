@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
 import AuthContext, { type AuthContextType } from "~/context/auth/auth-context";
 import { queryClient } from "~/lib/query-client";
-import authService from "~/services/auth-service";
+import type { RegisterRequest } from "~/types/auth";
 
 export const useAuth = (): AuthContextType => {
 	const context = useContext(AuthContext);
@@ -15,12 +15,14 @@ export const useAuth = (): AuthContextType => {
 };
 
 export const useRegister = () => {
+	const auth = useAuth();
+
 	return useMutation({
-		mutationFn: (data: object | FormData) => {
-			return authService.register(data);
+		mutationFn: (data: RegisterRequest) => {
+			return auth.register(data);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["users"] });
+			queryClient.invalidateQueries({ queryKey: ["current-user"] });
 		},
 	});
 };

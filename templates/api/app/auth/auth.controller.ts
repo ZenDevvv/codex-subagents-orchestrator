@@ -30,22 +30,11 @@ export const controller = (prisma: PrismaClient) => {
 			}
 
 			const {
+				firstName,
+				lastName,
 				email,
 				password,
 				userName,
-				role,
-				subRole,
-				orgId,
-				person: {
-					personalInfo,
-					contactInfo,
-					addresses,
-					languages,
-					preferredLanguage,
-					documents,
-					emergencyContacts,
-					kycStatus,
-				},
 			} = validationResult.data;
 
 			authLogger.info(`${config.INFO.USER.REGISTERING_USER}: ${email}`);
@@ -70,15 +59,15 @@ export const controller = (prisma: PrismaClient) => {
 			// Create Person record with all related data
 			const person = await prisma.person.create({
 				data: {
-					personalInfo: personalInfo,
-					contactInfo: contactInfo ?? [],
-					addresses: addresses ?? [],
-					languages: languages ?? [],
-					preferredLanguage: preferredLanguage ?? null,
-					documents: documents ?? null,
-					emergencyContacts: emergencyContacts ?? [],
-					kycStatus: kycStatus ?? "PENDING",
-					...(orgId ? { orgId } : {}),
+					personalInfo: {
+						firstName,
+						lastName,
+					},
+					contactInfo: [],
+					addresses: [],
+					languages: [],
+					emergencyContacts: [],
+					documents: null,
 				},
 			});
 
@@ -89,10 +78,9 @@ export const controller = (prisma: PrismaClient) => {
 					userName,
 					password: hashedPassword,
 					loginMethod: "email",
-					role: role,
+					role: "user",
 					personId: person.id,
-					...(orgId ? { orgId } : {}),
-					subRole: subRole ?? [],
+					subRole: [],
 				},
 			});
 
