@@ -4,6 +4,13 @@ Create the shared planning artifacts that make slice execution possible. This co
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent owns all shared contract decisions and final planning artifacts.
+- Optional delegation: one `explorer` subagent for dependency and acceptance cross-checks.
+- Do not delegate final dependency-map decisions or slice boundary decisions.
+- Any delegated task must use the handoff contract in `.ai-slices/docs/codex-subagent-workflow.md`.
+
 ## Agent And Skills
 
 Adopt the agent defined in `agents/software-architect.md`.

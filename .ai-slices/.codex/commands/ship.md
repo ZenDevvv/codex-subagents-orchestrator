@@ -4,6 +4,13 @@ Finalize the project once launch slices are complete.
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent owns ship precondition checks, blocker decisions, and final ship status updates.
+- Optional delegation: one `explorer` for docs/env drift checks and one `explorer` for deploy artifact checks.
+- Keep release-blocking decisions in the main agent.
+- Any delegated task must use the handoff contract in `.ai-slices/docs/codex-subagent-workflow.md`.
+
 ## Agent And Skill
 
 Adopt the agent defined in `agents/release-engineer.md`.

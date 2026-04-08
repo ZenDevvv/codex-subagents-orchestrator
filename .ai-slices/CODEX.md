@@ -1,6 +1,6 @@
-# AI Dev Orchestrator - Slice Workflow
+# AI Dev Orchestrator - Codex Slice Workflow
 
-This project uses the slice-based orchestrator in `.ai-slices/`.
+This project uses the Codex-first slice orchestrator in `.ai-slices/`.
 
 ## Start Here
 
@@ -26,6 +26,16 @@ Then plan and execute slices:
 ```
 
 Use one workflow per project session.
+
+## Command Specs
+
+Codex command prompts live in:
+
+- `.ai-slices/.codex/commands/`
+
+Subagent policy and task handoff contract live in:
+
+- `.ai-slices/docs/codex-subagent-workflow.md`
 
 ## Public Commands
 

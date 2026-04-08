@@ -2,6 +2,9 @@
 
 This package contains the standalone orchestrator used by the repository.
 
+Codex workflow prompts live in `.ai-slices/.codex/commands/`.
+Subagent delegation policy and handoff contract live in `docs/codex-subagent-workflow.md`.
+
 ## What This Is
 
 The slice workflow turns a rough app idea into a production-ready scaffold by:

@@ -4,6 +4,13 @@ Run a targeted stabilization loop for the selected scope.
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent owns scope resolution (`next`, `SLICE-xxx`, or bug-description mapping).
+- Delegate targeted patches to one `worker` at a time by default.
+- Parallel workers are allowed only for disjoint write scopes with independent failing checks.
+- Any delegated task must use the handoff contract in `.ai-slices/docs/codex-subagent-workflow.md`.
+
 ## Agent And Skills
 
 Adopt the agent defined in `agents/fullstack-builder.md`.

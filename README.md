@@ -31,7 +31,8 @@ The reference slice exists to prove that the orchestrator, templates, and tests 
 
 ## Command Surface
 
-The orchestrator prompts live in `.ai-slices/.claude/commands/`.
+The orchestrator prompts live in `.ai-slices/.codex/commands/`.
+The legacy Claude command directory has been retired.
 
 Public commands:
 
@@ -89,10 +90,11 @@ ai-dev-orchestrator-v2/
 
 Contains:
 
-- `CLAUDE.md`
-- `.claude/commands/`
+- `CODEX.md`
+- `.codex/commands/`
 - `agents/`
 - `skills/`
+- `.ai-slices/docs/codex-subagent-workflow.md`
 - `.ai-slices/scripts/doctor.mjs`
 - permanent reference docs for the workflow
 
@@ -153,6 +155,6 @@ Recommended status values:
 ## Packaging Notes
 
 - This folder is intentionally standalone and ready to move into its own repository.
-- There is no top-level `.claude/` folder in V2.
+- There is no top-level `.codex/` folder in V2.
 - Template copies are cleaned of local and generated artifacts such as `node_modules`, Playwright reports, caches, and test-result output.
 - `/doctor` is the deterministic repo-health command for ongoing maintenance.

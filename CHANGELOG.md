@@ -17,11 +17,15 @@ Versioning: [Semantic Versioning](https://semver.org/)
 - Permanent auth-and-dashboard reference slice in the starter templates.
 - `/doctor` command plus deterministic audit script for repo drift checks.
 - Backend auth contract tests and mocked/live Playwright reference coverage.
+- Codex subagent workflow contract at `.ai-slices/docs/codex-subagent-workflow.md`.
 
 ### Changed
 - `/fix-bugs` command interface now accepts bug descriptions in addition to `all`, `next`, and `SLICE_ID`.
 - `/plan` and `/build` now explicitly consume images in `docs/design-references/` as UI references when present.
 - Added precedence rule: textual planning artifacts win when image references conflict with `foundation`, `design-system`, or slice brief requirements.
+- Migrated command prompt surface from the legacy command directory to `.ai-slices/.codex/commands/`.
+- Replaced the legacy orchestrator guide with `.ai-slices/CODEX.md` as the codex-native workflow guide.
+- Updated doctor drift checks to enforce Codex command-surface parity and reject legacy Claude references.
 
 ### Notes
 - V2 is intentionally separate from the original `ai-dev-orchestrator` project.

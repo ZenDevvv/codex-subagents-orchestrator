@@ -4,13 +4,18 @@ Audit orchestrator docs, template contracts, and test conventions for drift.
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent should run the deterministic script directly.
+- Optional delegation: one `explorer` subagent to summarize failing findings with fix-grouping if the script reports multiple issues.
+
 ## Required Inputs
 
 Read these files before proceeding:
 
 - `README.md`
 - `.ai-slices/README.md`
-- `.ai-slices/CLAUDE.md`
+- `.ai-slices/CODEX.md`
 - `templates/api/README.md`
 - `templates/app/README.md`
 - `.ai-slices/docs/reference/`

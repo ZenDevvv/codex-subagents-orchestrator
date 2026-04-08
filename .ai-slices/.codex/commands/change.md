@@ -4,6 +4,12 @@ Use this command whenever requirements, shared contracts, or shared design rules
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent owns stale propagation decisions and final updates to shared docs.
+- Optional delegation: one `explorer` subagent for impact discovery across slice docs and progress logs.
+- Any delegated task must use the handoff contract in `.ai-slices/docs/codex-subagent-workflow.md`.
+
 ## Agents And Skills
 
 Adopt the agent defined in `agents/business-analyst.md`, then switch to `agents/software-architect.md` for shared-contract and stale-propagation decisions.

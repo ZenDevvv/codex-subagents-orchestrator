@@ -4,6 +4,11 @@ Summarize the current slice workflow state and tell the user the exact next comm
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent should execute this command directly.
+- Do not delegate unless the progress log is unusually large and requires focused parsing.
+
 ## Required Inputs
 
 Read these files if they exist:

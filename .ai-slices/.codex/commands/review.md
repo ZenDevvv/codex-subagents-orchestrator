@@ -4,6 +4,12 @@ Run a manual review on a specific slice or on release readiness.
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent owns severity ranking and final findings.
+- Optional delegation: one `explorer` subagent for evidence collection in targeted code areas.
+- Any delegated task must use the handoff contract in `.ai-slices/docs/codex-subagent-workflow.md`.
+
 ## Agent
 
 Adopt the agent defined in `agents/software-architect.md`.

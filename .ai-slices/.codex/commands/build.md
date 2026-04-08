@@ -4,6 +4,16 @@ Build one slice, the next ready slice, or every slice in dependency order. This 
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent owns scope selection, stage order, and completion state updates.
+- Preferred delegation pattern:
+  - one `worker` for backend-owned paths (`templates/api/**`)
+  - one `worker` for frontend-owned paths (`templates/app/**`)
+  - optional `worker` for test-only paths when ownership is disjoint
+- Main agent integrates results and reruns required gates before marking stages complete.
+- Any delegated task must use the handoff contract in `.ai-slices/docs/codex-subagent-workflow.md`.
+
 ## Agent And Skills
 
 Adopt the agent defined in `agents/fullstack-builder.md`.

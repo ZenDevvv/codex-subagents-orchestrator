@@ -4,6 +4,12 @@ Refine the product concept before any slice planning begins. This command mainta
 
 ---
 
+## Codex Subagent Execution
+
+- Main agent owns concept synthesis and final `docs/concept.md` decisions.
+- Optional delegation: one `explorer` subagent for focused gap extraction from current concept docs.
+- Any delegated task must use the handoff contract in `.ai-slices/docs/codex-subagent-workflow.md`.
+
 ## Agent And Skill
 
 Adopt the agent defined in `agents/business-analyst.md`.

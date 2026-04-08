@@ -2,6 +2,8 @@
 
 Produce a concise state snapshot for long sessions.
 
+Main agent should execute this command directly without delegation.
+
 Read:
 
 - `docs/slices.md`

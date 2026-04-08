@@ -95,9 +95,23 @@ function assertCommandFilesExist() {
 	];
 
 	for (const name of commandFiles) {
-		const relativePath = `.ai-slices/.claude/commands/${name}.md`;
+		const relativePath = `.ai-slices/.codex/commands/${name}.md`;
 		if (!exists(relativePath)) {
 			addError("Missing command file", relativePath);
+		}
+	}
+}
+
+function assertNoLegacyClaudeCommandSurface() {
+	const markdownFiles = walk(repoRoot, (fullPath) => /\.md$/i.test(fullPath));
+	const legacyMarkers = [".ai-slices/.claude/commands/", ".ai-slices/CLAUDE.md"];
+
+	for (const fullPath of markdownFiles) {
+		const text = fs.readFileSync(fullPath, "utf8");
+		for (const marker of legacyMarkers) {
+			if (text.includes(marker)) {
+				addError(`Legacy Claude workflow reference found: ${marker}`, toRepoPath(fullPath));
+			}
 		}
 	}
 }
@@ -380,8 +394,9 @@ function assertReferenceDocsAreConcrete() {
 
 assertCommandSurface("README.md");
 assertCommandSurface(".ai-slices/README.md");
-assertCommandSurface(".ai-slices/CLAUDE.md");
+assertCommandSurface(".ai-slices/CODEX.md");
 assertCommandFilesExist();
+assertNoLegacyClaudeCommandSurface();
 assertNoLegacyPhaseTags();
 assertSliceTags();
 assertPackageScriptRefs("templates/api/package.json");
@@ -415,6 +430,7 @@ assertAuthContractShape("templates/app/app/zod/auth.zod.ts");
 assertRoleEnumParity();
 assertNoMojibake();
 assertReferenceDocsAreConcrete();
+assertRequiredFiles([".ai-slices/docs/codex-subagent-workflow.md"]);
 
 if (errors.length > 0) {
 	console.error("Doctor found repo drift:\n");
