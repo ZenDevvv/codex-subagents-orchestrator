@@ -28,7 +28,7 @@ Run:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e:mocked
+npm run test:mocked
 ```
 
 ## Live Verification
@@ -49,7 +49,7 @@ Run:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e:live
+npm run test:live
 ```
 
 ## Review Focus

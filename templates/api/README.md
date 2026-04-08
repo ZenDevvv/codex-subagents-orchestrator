@@ -66,7 +66,10 @@ npm run dev
 |---|---|
 | `npm run dev` | Start dev server with hot reload |
 | `npm run build` | Bundle the API with webpack |
-| `npm run test` | Run Mocha contract tests |
+| `npm run test` | Run the backend TDD gate: smoke, integration, and unit tests |
+| `npm run test:smoke` | Run backend smoke tests |
+| `npm run test:integration` | Run backend integration tests |
+| `npm run test:unit` | Run backend unit tests |
 | `npm run lint` | Run ESLint |
 | `npm run export-docs` | Generate OpenAPI and Postman output |
 | `npm run prisma-generate` | Generate Prisma client |
@@ -76,7 +79,9 @@ npm run dev
 - `app/auth/`
 - `app/user/`
 - `zod/auth.zod.ts`
-- `tests/auth-contract.spec.ts`
+- `tests/smoke/api.smoke.spec.ts`
+- `tests/integration/auth-reference.spec.ts`
+- `tests/unit/auth-contract.spec.ts`
 
 ## Docker
 

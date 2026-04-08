@@ -1,8 +1,7 @@
 import { expect } from "chai";
+import { LoginSchema, RegisterSchema } from "../../zod/auth.zod";
 
-import { LoginSchema, RegisterSchema } from "../zod/auth.zod";
-
-describe("auth contract", () => {
+describe("auth contract unit", () => {
 	it("accepts the minimal public register payload", () => {
 		const result = RegisterSchema.safeParse({
 			firstName: "Ada",

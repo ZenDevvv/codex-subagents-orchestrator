@@ -121,13 +121,14 @@ Implement only the backend scope described in the slice brief:
 - controllers
 - middleware
 - registration
+- backend smoke, integration, and unit coverage for the slice
 
 Checks:
 
 ```text
 cd templates/api
 npm run build
-npm test
+npm run test:tdd
 ```
 
 ### Stage C - `FRONTEND`
@@ -159,7 +160,7 @@ Checks:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e:mocked
+ npm run test:mocked
 ```
 
 ### Stage E - `LIVE_TESTS`
@@ -174,7 +175,7 @@ Checks:
 cd templates/app
 npm run typecheck
 npm run build
-npm run test:e2e:live
+ npm run test:live
 ```
 
 ### Stage F - `REVIEW`

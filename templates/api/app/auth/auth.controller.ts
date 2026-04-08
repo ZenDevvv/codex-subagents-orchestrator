@@ -17,10 +17,8 @@ export const controller = (prisma: PrismaClient) => {
 	const register = async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const validationResult = RegisterSchema.safeParse(req.body);
-			console.log("this is the validationResult", validationResult);
 
 			if (!validationResult.success) {
-				console.log("this is the error", validationResult.error);
 				const formattedErrors = formatZodErrors(validationResult.error);
 				authLogger.error(`Validation failed: ${JSON.stringify(formattedErrors)}`);
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import AuthContext, { type AuthContextType } from "./auth-context";
 import authService from "~/services/auth-service";
 import userService from "~/services/user-service";
@@ -14,28 +14,41 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [user, setUser] = useState<UserWithRelation | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const sessionRequestVersionRef = useRef(0);
 
 	// Clear error function
 	const clearError = () => setError(null);
 
 	// Get current user from API
 	const getCurrentUser = async () => {
+		const requestVersion = ++sessionRequestVersionRef.current;
 		try {
 			setIsLoading(true);
 			setError(null);
 			const response = await userService.getCurrentUser();
 
+			if (requestVersion !== sessionRequestVersionRef.current) {
+				return;
+			}
+
 			setUser(response.user as UserWithRelation);
 		} catch (error: any) {
+			if (requestVersion !== sessionRequestVersionRef.current) {
+				return;
+			}
+
 			console.error("Error fetching current user:", error);
 			setUser(null);
 			setError(null);
 		} finally {
-			setIsLoading(false);
+			if (requestVersion === sessionRequestVersionRef.current) {
+				setIsLoading(false);
+			}
 		}
 	};
 
 	const login = async (identifier: string, password: string) => {
+		sessionRequestVersionRef.current += 1;
 		try {
 			setIsLoading(true);
 			setError(null);
@@ -55,6 +68,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	};
 
 	const register = async (payload: RegisterRequest) => {
+		sessionRequestVersionRef.current += 1;
 		try {
 			setIsLoading(true);
 			setError(null);
@@ -70,6 +84,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	// Logout function
 	const logout = async () => {
+		sessionRequestVersionRef.current += 1;
 		try {
 			setIsLoading(true);
 			setError(null);

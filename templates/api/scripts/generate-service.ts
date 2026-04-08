@@ -4,6 +4,7 @@ import path from "path";
 const rootDir = path.resolve(__dirname, "../..");
 const appDir = path.join(process.cwd(), "app");
 const testsDir = path.join(process.cwd(), "tests");
+const integrationTestsDir = path.join(testsDir, "integration");
 const constantsFile = path.join(process.cwd(), "config", "constant.ts");
 const zodDir = path.join(process.cwd(), "zod");
 const prismaSchemaDir = path.join(process.cwd(), "prisma", "schema");
@@ -14,7 +15,7 @@ const indexFile = path.join(process.cwd(), "index.ts");
 const templateAppDir = path.join(process.cwd(), "app", "template");
 const templateZodDir = path.join(process.cwd(), "zod");
 const templateSchemaDir = path.join(process.cwd(), "prisma", "schema");
-const templateTestsDir = path.join(process.cwd(), "tests");
+const templateTestsDir = path.join(process.cwd(), "tests", "templates");
 
 // Fallback to npm package templates if local templates don't exist
 // Find the package root by looking for the templates directory in node_modules
@@ -127,8 +128,6 @@ function validateServiceName(input: string): string {
 }
 
 function replaceAllIdentifiers(content: string, name: string, source: string): string {
-	const lower = name.toLowerCase();
-	const pascal = toPascalCase(name);
 	const camel = toCamelCase(name);
 	const upper = name.toUpperCase();
 	// remove plural handling to always map to singular identifiers
@@ -844,13 +843,16 @@ function scaffoldTestForService(name: string, source: string) {
 		getTemplateTestsDir(),
 		`${source.toLowerCase()}.controller.spec.ts`,
 	);
-	const targetTestFile = path.join(testsDir, `${name}.controller.spec.ts`);
+	const targetTestFile = path.join(integrationTestsDir, `${name}.controller.spec.ts`);
 
 	if (!fs.existsSync(sourceTestFile)) {
 		console.log(`⚠ Test template not found at ${sourceTestFile}, skipping test generation`);
 		return;
 	}
 	if (fs.existsSync(targetTestFile)) return;
+	if (!fs.existsSync(integrationTestsDir)) {
+		fs.mkdirSync(integrationTestsDir, { recursive: true });
+	}
 
 	const content = fs.readFileSync(sourceTestFile, "utf8");
 	const replaced = replaceAllIdentifiers(content, name, source);
@@ -937,7 +939,7 @@ function main() {
 	console.log(`   - zod/${name}.zod.ts`);
 	console.log(`   - prisma/schema/${name}.prisma`);
 	console.log(`   - prisma/seeds/${name}Seeder.ts`);
-	console.log(`   - tests/${name}.controller.spec.ts`);
+	console.log(`   - tests/integration/${name}.controller.spec.ts`);
 	console.log(`   - Updated config/constant.ts`);
 	console.log(`   - Updated index.ts`);
 	console.log(`   - Updated prisma/seed.ts`);

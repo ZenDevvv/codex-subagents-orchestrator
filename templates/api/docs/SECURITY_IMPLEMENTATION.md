@@ -20,7 +20,7 @@
 - `express-rate-limit`: Core rate limiting functionality
 - `express-slow-down`: Gradual rate limiting with delays
 
-### 2. Input Sanitization (`middleware/inputSanitizer.ts`)
+### 2. Input Sanitization (`middleware/passwordSanitise.ts`)
 
 **Features:**
 
@@ -137,30 +137,29 @@ app.use("/api/sensitive", customLimiter);
 ### Input Sanitization
 
 ```typescript
-import { sanitizeInput } from "./middleware/inputSanitizer";
+import { hidePasswordMiddleware } from "./middleware/passwordSanitise";
 
-// Basic sanitization
-app.use(
-	sanitizeInput({
-		allowHtml: false,
-		maxLength: 1000,
-		logViolations: true,
-	}),
-);
+app.use(hidePasswordMiddleware());
 ```
 
 ## 🧪 Testing
 
 ### Security Test Suite
 
-Created `tests/security.middleware.spec.ts` with tests for:
+Current backend coverage is anchored by:
 
-- Rate limiting functionality
-- Input sanitization (SQL injection)
-- Request size limiting
-- Security headers
-- Authentication security
-- Email sanitization
+- `tests/smoke/api.smoke.spec.ts`
+- `tests/integration/auth-reference.spec.ts`
+- `tests/unit/auth-contract.spec.ts`
+- `tests/unit/response-helpers.spec.ts`
+
+These tests currently verify:
+
+- API boot and health checks
+- public auth validation failures
+- protected current-user access boundaries
+- register, login, and logout reference behavior
+- shared success and error response helpers
 
 ### Running Tests
 
@@ -271,7 +270,9 @@ The security middleware logs:
 
 - `docs/SECURITY.md`: Comprehensive security documentation
 - `docs/SECURITY_IMPLEMENTATION.md`: This implementation summary
-- `tests/security.middleware.spec.ts`: Security test suite
+- `tests/smoke/api.smoke.spec.ts`: Backend smoke suite
+- `tests/integration/auth-reference.spec.ts`: Reference auth integration suite
+- `tests/unit/auth-contract.spec.ts`: Auth contract unit suite
 
 ### Key Documentation Sections
 

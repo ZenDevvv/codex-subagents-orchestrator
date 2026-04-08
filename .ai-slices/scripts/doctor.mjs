@@ -169,6 +169,90 @@ function assertPackageScriptRefs(relativePath) {
 	}
 }
 
+function assertRequiredScripts(relativePath, requiredScripts) {
+	const packageJson = JSON.parse(readText(relativePath));
+	const scripts = packageJson.scripts || {};
+
+	for (const scriptName of requiredScripts) {
+		if (!scripts[scriptName]) {
+			addError(`Missing required script "${scriptName}"`, relativePath);
+		}
+	}
+}
+
+function assertRequiredFiles(relativePaths) {
+	for (const relativePath of relativePaths) {
+		if (!exists(relativePath)) {
+			addError("Missing required file", relativePath);
+		}
+	}
+}
+
+function getMarkdownProjectRoot(relativePath) {
+	if (relativePath.startsWith("templates/api/")) {
+		return path.join(repoRoot, "templates", "api");
+	}
+
+	if (relativePath.startsWith("templates/app/")) {
+		return path.join(repoRoot, "templates", "app");
+	}
+
+	if (relativePath.startsWith(".ai-slices/")) {
+		return path.join(repoRoot, ".ai-slices");
+	}
+
+	return repoRoot;
+}
+
+function resolveMarkdownRef(baseDir, projectRoot, candidate) {
+	if (candidate.startsWith("http://") || candidate.startsWith("https://")) {
+		return null;
+	}
+
+	if (candidate.startsWith(".ai-slices/") || candidate.startsWith("templates/")) {
+		return path.join(repoRoot, candidate);
+	}
+
+	if (
+		candidate.startsWith("./") ||
+		candidate.startsWith("../") ||
+		candidate.startsWith("app/") ||
+		candidate.startsWith("config/") ||
+		candidate.startsWith("docs/") ||
+		candidate.startsWith("helper/") ||
+		candidate.startsWith("middleware/") ||
+		candidate.startsWith("prisma/") ||
+		candidate.startsWith("scripts/") ||
+		candidate.startsWith("tests/") ||
+		candidate.startsWith("utils/") ||
+		candidate.startsWith("zod/")
+	) {
+		return path.resolve(projectRoot, candidate);
+	}
+
+	return null;
+}
+
+function assertMarkdownFileRefsExist(relativePath) {
+	const text = readText(relativePath);
+	const baseDir = path.dirname(path.join(repoRoot, relativePath));
+	const projectRoot = getMarkdownProjectRoot(relativePath);
+	const matches = text.matchAll(/`([^`\n]+?\.(?:md|ts|tsx|js|mjs|json|yml|yaml|prisma))`/g);
+
+	for (const match of matches) {
+		const candidate = match[1];
+		const resolvedPath = resolveMarkdownRef(baseDir, projectRoot, candidate);
+
+		if (!resolvedPath) {
+			continue;
+		}
+
+		if (!fs.existsSync(resolvedPath)) {
+			addError(`Markdown references a missing file: ${candidate}`, relativePath);
+		}
+	}
+}
+
 function parseModuleListFromReadme() {
 	const text = readText("templates/api/README.md");
 	const modules = new Set();
@@ -302,6 +386,29 @@ assertNoLegacyPhaseTags();
 assertSliceTags();
 assertPackageScriptRefs("templates/api/package.json");
 assertPackageScriptRefs("templates/app/package.json");
+assertRequiredScripts("templates/api/package.json", [
+	"test:smoke",
+	"test:integration",
+	"test:unit",
+	"test:tdd",
+]);
+assertRequiredScripts("templates/app/package.json", [
+	"test:smoke",
+	"test:mocked",
+	"test:live",
+]);
+assertRequiredFiles([
+	"templates/api/tests/support/test-bootstrap.ts",
+	"templates/api/tests/support/create-api-test-app.ts",
+	"templates/api/tests/templates/template.controller.spec.ts",
+	"templates/api/tests/smoke/api.smoke.spec.ts",
+	"templates/api/tests/integration/auth-reference.spec.ts",
+	"templates/api/tests/unit/auth-contract.spec.ts",
+]);
+assertMarkdownFileRefsExist("README.md");
+assertMarkdownFileRefsExist("templates/api/README.md");
+assertMarkdownFileRefsExist("templates/app/README.md");
+assertMarkdownFileRefsExist("templates/api/docs/SECURITY_IMPLEMENTATION.md");
 assertApiReadmeMatchesModules();
 assertAuthContractShape("templates/api/zod/auth.zod.ts");
 assertAuthContractShape("templates/app/app/zod/auth.zod.ts");

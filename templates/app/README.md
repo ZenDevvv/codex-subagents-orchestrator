@@ -53,6 +53,9 @@ Set the API base URL with `VITE_BASE_URL` when needed. By default the app target
 | `npm run lint` | Run ESLint |
 | `npm run frontend:check` | Run typecheck and production build |
 | `npm run test:e2e` | Run Playwright E2E tests |
+| `npm run test:smoke` | Run the Playwright smoke suite |
+| `npm run test:mocked` | Run mocked slice coverage |
+| `npm run test:live` | Run live slice coverage |
 
 ## Playwright Conventions
 
@@ -60,10 +63,10 @@ Use slice tags, not legacy phase tags:
 
 ```bash
 # Mocked slice coverage
-npm run test:e2e:mocked
+npm run test:mocked
 
 # Live integration coverage
-E2E_ENABLE_LIVE=1 npm run test:e2e:live
+E2E_ENABLE_LIVE=1 npm run test:live
 ```
 
 The live test expects:

@@ -93,7 +93,7 @@ Contains:
 - `.claude/commands/`
 - `agents/`
 - `skills/`
-- `scripts/doctor.mjs`
+- `.ai-slices/scripts/doctor.mjs`
 - permanent reference docs for the workflow
 
 ### `docs/`
